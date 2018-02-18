@@ -4,13 +4,15 @@ class Player
   ACCELERATION = 1.5
   FRICTION = 0.9
 
+  attr_reader :x, :y, :angle, :radius
+
   def initialize(window)
     @x = 200
     @y = 200
     @velocity_x = 0
     @velocity_y = 0
     @angle = 0
-    @radius = 30
+    @radius = 35
     @window = window
     @image = Gosu::Image.new('images/spaceship.png')
   end

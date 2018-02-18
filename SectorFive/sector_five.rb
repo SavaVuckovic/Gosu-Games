@@ -1,6 +1,7 @@
 require 'gosu'
 require_relative 'player'
 require_relative 'enemy'
+require_relative 'bullet'
 
 class SectorFive < Gosu::Window
 
@@ -14,6 +15,13 @@ class SectorFive < Gosu::Window
 
     @player = Player.new(self)
     @enemies = []
+    @bullets = []
+  end
+
+  def button_down(id)
+    if id == Gosu::KbSpace
+      @bullets.push(Bullet.new(self, @player.x, @player.y, @player.angle))
+    end
   end
 
   def update
@@ -29,12 +37,21 @@ class SectorFive < Gosu::Window
     @enemies.each do |enemy|
       enemy.move
     end
+
+    @bullets.each do |bullet|
+      bullet.move
+    end
   end
 
   def draw
     @player.draw
+
     @enemies.each do |enemy|
       enemy.draw
+    end
+
+    @bullets.each do |bullet|
+      bullet.draw
     end
   end
 
