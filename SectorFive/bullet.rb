@@ -2,6 +2,8 @@ class Bullet
 
   SPEED = 14
 
+  attr_reader :x, :y, :radius
+
   def initialize(window, x, y, angle)
     @x = x
     @y = y
@@ -9,6 +11,15 @@ class Bullet
     @image = Gosu::Image.new('images/bullet.png')
     @radius = 10
     @window = window
+  end
+
+  def onscreen?
+    right = @window.width + @radius
+    left = -@radius
+    top = -@radius
+    bottom = @window.height + @radius
+
+    @x > left and @x < right and @y > top and @y < bottom
   end
 
   def move
