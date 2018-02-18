@@ -6,13 +6,14 @@ class SectorFive < Gosu::Window
 
   SCREEN_WIDTH = 1200
   SCREEN_HEIGHT = 900
+  ENEMY_FREQUENCY = 0.02
 
   def initialize
     super(SCREEN_WIDTH, SCREEN_HEIGHT)
     self.caption = 'Sector Five'
 
     @player = Player.new(self)
-    @enemy = Enemy.new(self)
+    @enemies = []
   end
 
   def update
@@ -21,12 +22,20 @@ class SectorFive < Gosu::Window
     @player.accelerate if button_down?(Gosu::KbUp)
     @player.move
 
-    @enemy.move
+    if rand < ENEMY_FREQUENCY
+      @enemies.push(Enemy.new(self))
+    end
+
+    @enemies.each do |enemy|
+      enemy.move
+    end
   end
 
   def draw
     @player.draw
-    @enemy.draw
+    @enemies.each do |enemy|
+      enemy.draw
+    end
   end
 
 end
