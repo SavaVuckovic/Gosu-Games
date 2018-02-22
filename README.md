@@ -1,2 +1,2 @@
 # Gosu-Games
-Games from the book on Ruby game development
+Games from the book on Ruby game development. 
