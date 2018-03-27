@@ -85,6 +85,21 @@ class SectorFive < Gosu::Window
 		end
 	end
 
+	def draw_end
+		clip_to(50, 140, 700, 360) do 
+			@credits.each do |credit|
+				credit.draw
+			end
+		end
+
+		draw_line(0, 140, Gosu::Color::RED, SCREEN_WIDTH, 140, Gosu::Color::RED)
+		@message_font.draw(@message, 40, 40, 1, 1, 1, Gosu::Color::FUCHSIA)
+		@message_font.draw(@message2, 40, 75, 1, 1, 1, Gosu::Color::FUCHSIA)
+		draw_line(0, 500, Gosu::Color::RED, SCREEN_WIDTH, 500, Gosu::Color::RED)
+
+		@message_font.draw(@bottom_message,180,540,1,1,1,Gosu::Color::AQUA)
+	end
+
 	def update
 		case @scene
 			when :game then update_game
@@ -145,6 +160,18 @@ class SectorFive < Gosu::Window
 		initialize_end(:off_top) if @player.y < -@player.radius
 	end
 
+	def update_end
+		@credits.each do |credit|
+			credit.move
+		end
+
+		if @credits.last.y < 150
+			@credits.each do |credit|
+				credit.reset
+			end
+		end
+	end
+
 	def button_down(id)
 		case @scene
 			when :start then button_down_start(id)
@@ -161,6 +188,14 @@ class SectorFive < Gosu::Window
 		if id == Gosu::KbSpace
       @bullets.push(Bullet.new(self, @player.x, @player.y, @player.angle))
     end
+	end
+
+	def button_down_end(id)
+		if id == Gosu::KbP
+			initialize_game
+		elsif id == Gosu::KbQ
+			close
+		end
 	end
 
 end
