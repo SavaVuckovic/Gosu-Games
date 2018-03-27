@@ -1,0 +1,10 @@
+Sector Five
+by Sava Vuckovic
+
+Based on a Tutorial from 
+Learn Game Programming with Ruby
+by Mark Sobkowicz
+
+Game art from OpenGameArt.org
+​ 	
+Licensed under Creative Commons: Public Domain CC0

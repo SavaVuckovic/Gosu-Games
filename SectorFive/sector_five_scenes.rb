@@ -3,6 +3,7 @@ require_relative 'player'
 require_relative 'enemy'
 require_relative 'bullet'
 require_relative 'explosion'
+require_relative 'credit'
 
 class SectorFive < Gosu::Window
 
@@ -27,6 +28,33 @@ class SectorFive < Gosu::Window
 		@scene = :game
 		@enemies_appeared = 0
 		@enemies_destroyed = 0
+	end
+
+	def initialize_end(fate) 
+		case fate
+			when :count_reached
+				@message = "Congratulations! You destroyed #{@enemies_destroyed} ships"
+				@message2 = "and #{MAX_ENEMIES - @enemies_destroyed} reached the base."
+			when :hit_by_enemy
+				@message = "You were struck by an enemy ship"
+				@message2 = "Before your ship was destroyed, "
+				@message2 += "You took out #{@enemies_destroyed} enemy ships."
+			when :off_top
+				@message = "You got too close to the enemy ship."
+				@message2 = "Before your ship was destroyed, "
+				@message2 += "You took out #{@enemies_destroyed} enemy ships."
+		end
+
+		@bottom_message = "Press P to play again, or Q to quit."
+		@message_font = Gosu::Font.new(28)
+		@credits = []
+		y = 700
+
+		File.open('credits.txt').each do |line|
+			@credits.push(Credit.new(self, line.chomp, 100, y))
+			y += 30
+		end
+		@scene = :end
 	end
 
 	def draw
