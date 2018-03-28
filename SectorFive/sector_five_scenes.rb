@@ -17,6 +17,9 @@ class SectorFive < Gosu::Window
 		self.caption = "Sector Five"
 		@background_image = Gosu::Image.new('images/start_screen.jpg')
 		@scene = :start
+
+		@start_music = Gosu::Song.new('sounds/lost_frontier.ogg')
+		@start_music.play(true)
 	end
 
 	def initialize_game
@@ -28,6 +31,11 @@ class SectorFive < Gosu::Window
 		@scene = :game
 		@enemies_appeared = 0
 		@enemies_destroyed = 0
+
+		@game_music = Gosu::Song.new('sounds/cephalopod.ogg')
+		@game_music.play(true)
+		@explosion_sound = Gosu::Sample.new('sounds/explosion.ogg')
+		@shooting_sound = Gosu::Sample.new('sounds/shoot.ogg')
 	end
 
 	def initialize_end(fate) 
@@ -55,6 +63,9 @@ class SectorFive < Gosu::Window
 			y += 30
 		end
 		@scene = :end
+
+		@end_music = Gosu::Song.new('sounds/from_here.ogg')
+		@end_music.play(true)
 	end
 
 	def draw
@@ -134,6 +145,7 @@ class SectorFive < Gosu::Window
           @bullets.delete(bullet)
 					@explosions.push(Explosion.new(self, enemy.x, enemy.y))
 					@enemies_destroyed += 1
+					@explosion_sound.play(0.3)
         end
       end
     end
