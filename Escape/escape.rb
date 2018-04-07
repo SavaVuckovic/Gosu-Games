@@ -1,6 +1,7 @@
 require 'gosu'
 require 'chipmunk'
 require_relative 'boulder'
+require_relative 'platform'
 
 class Escape < Gosu::Window
 
@@ -18,6 +19,7 @@ class Escape < Gosu::Window
     @space.damping = DAMPING
     @space.gravity = CP::Vec2.new(0.0, GRAVITY)
     @boulders = []
+    @platforms = make_platforms
   end
 
   def update
@@ -38,6 +40,19 @@ class Escape < Gosu::Window
     @boulders.each do |boulder|
       boulder.draw
     end
+
+    @platforms.each do |platform|
+      platform.draw
+    end
+  end
+
+  def make_platforms
+    platforms = []
+    platforms.push Platform.new(self, 150, 700)
+    platforms.push Platform.new(self, 320, 650)
+    platforms.push Platform.new(self, 150, 500)
+    platforms.push Platform.new(self, 470, 550)
+    return platforms
   end
 
 end
