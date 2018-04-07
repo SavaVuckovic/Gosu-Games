@@ -2,6 +2,7 @@ require 'gosu'
 require 'chipmunk'
 require_relative 'boulder'
 require_relative 'platform'
+require_relative 'wall'
 
 class Escape < Gosu::Window
 
@@ -20,6 +21,9 @@ class Escape < Gosu::Window
     @space.gravity = CP::Vec2.new(0.0, GRAVITY)
     @boulders = []
     @platforms = make_platforms
+    @floor = Wall.new(self, 400, 810, 800, 20)
+    @left_wall = Wall.new(self, -10, 400, 20, 800)
+    @right_wall = Wall.new(self, 810, 470, 20, 660)
   end
 
   def update
