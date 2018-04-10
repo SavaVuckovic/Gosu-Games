@@ -3,6 +3,7 @@ require 'chipmunk'
 require_relative 'boulder'
 require_relative 'platform'
 require_relative 'wall'
+require_relative 'chip'
 
 class Escape < Gosu::Window
 
@@ -24,6 +25,7 @@ class Escape < Gosu::Window
     @floor = Wall.new(self, 400, 810, 800, 20)
     @left_wall = Wall.new(self, -10, 400, 20, 800)
     @right_wall = Wall.new(self, 810, 470, 20, 660)
+    @player = Chip.new(self, 70, 700)
   end
 
   def update
@@ -35,6 +37,15 @@ class Escape < Gosu::Window
       if rand < BOULDER_FREQUENCY
         @boulders.push Boulder.new(self, 200 + rand(400), -20)
       end
+
+      if button_down?(Gosu::KbRight)
+        @player.move_right
+      elsif button_down?(Gosu::KbLeft)
+        @player.move_left
+      else
+        @player.stand
+      end
+
     end
   end
 
@@ -48,6 +59,8 @@ class Escape < Gosu::Window
     @platforms.each do |platform|
       platform.draw
     end
+
+    @player.draw
   end
 
   def make_platforms
@@ -57,6 +70,15 @@ class Escape < Gosu::Window
     platforms.push Platform.new(self, 150, 500)
     platforms.push Platform.new(self, 470, 550)
     return platforms
+  end
+
+  def button_down(id)
+    if id == Gosu::KbSpace
+      @player.jump
+    end
+    if id == Gosu::KbQ
+      close
+    end
   end
 
 end
